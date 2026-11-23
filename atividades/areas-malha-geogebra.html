@@ -54,14 +54,62 @@
 @media(max-width:950px){.area-layout{grid-template-columns:1fr}.area-graph,#ggb-container{min-height:390px;height:390px}}
 @media(max-width:600px){.area-shell{padding:16px 12px 50px}.area-panel{padding:16px}.area-graph,#ggb-container{min-height:310px;height:310px}.area-answer-grid{gap:8px}.area-answer-grid button{min-height:67px;font-size:23px}}
 @media print{header,.area-actions,.area-answer-grid,.area-next,.area-report,.area-guide,footer{display:none!important}.area-panel{break-inside:avoid;box-shadow:none}.area-shell{padding:0}}
+
+/* Aula gamificada: progresso, construtor e malha de 1 cm */
+.area-intro .game-pill{display:inline-flex;gap:8px;align-items:center;padding:9px 14px;margin:12px 8px 0 0;background:#ffffff1a;border:1px solid #ffffff42;border-radius:30px;font-weight:800;color:#d6fcff}
+.area-stats{grid-template-columns:repeat(4,minmax(0,1fr))}
+.area-graph{background:#fbffff}
+.area-graph svg{touch-action:manipulation}
+.game-banner{margin:18px 0 24px;padding:16px 21px;background:#edf9fc;border:1px solid #bee5ec;border-radius:15px;display:flex;gap:15px;align-items:center;flex-wrap:wrap}
+.game-banner strong{color:#063966;font-size:20px}.game-banner span{color:#3a6677;font-size:15px}
+.game-banner .game-badge{font-weight:850;border-radius:22px;background:#063966;color:#fff;padding:8px 12px;font-size:15px}
+.area-builder{margin-top:32px;padding:clamp(22px,3vw,34px);background:#ffffff;border:2px solid #a9dce5;border-radius:23px;box-shadow:0 12px 29px rgba(2,55,93,.08)}
+.area-builder[hidden]{display:none}
+.area-builder header{background:none;color:inherit}
+.area-builder h2{color:#063966;font-size:clamp(29px,4vw,45px);margin:8px 0 13px}
+.area-builder .builder-brief{font-size:clamp(17px,2vw,21px);max-width:900px;line-height:1.6;color:#375b70}
+.builder-areas{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(275px,.85fr);gap:19px;margin-top:20px}
+.builder-board{min-width:0;border:1px solid #b5d8e1;border-radius:15px;background:#faffff;padding:12px}
+.builder-board svg{width:100%;height:auto;display:block;touch-action:manipulation;cursor:crosshair;max-height:510px}
+.builder-board .board-help{font-size:14px;color:#486b7b;padding:10px 3px 2px}
+.builder-info{background:#f0f9fb;border-radius:15px;padding:22px}
+.builder-info h3{font-size:clamp(25px,3vw,32px);line-height:1.25;color:#063966;margin:5px 0 15px}
+.builder-target{font-size:clamp(32px,4vw,52px);font-weight:900;color:#063966;line-height:1.12;margin:12px 0}
+.builder-taskkind{display:block;color:#007f9b;font-weight:800}
+.builder-instruction{font-size:17px;line-height:1.55;color:#325869}
+.builder-buttons{display:flex;gap:9px;flex-wrap:wrap;margin:15px 0}
+.builder-buttons button,.builder-buttons a{border:0;padding:13px 16px;border-radius:11px;background:#063966;color:#fff;font-weight:800;cursor:pointer;font-size:15px;text-decoration:none}
+.builder-buttons button.secondary{background:#e0f1f6;color:#063966;border:1px solid #b9dbe5}
+.builder-buttons button:disabled{opacity:.5;cursor:not-allowed}
+.builder-feedback{font-size:16px;line-height:1.6;padding:14px 16px;border-left:5px solid #008aa7;background:#e4f5f9;border-radius:8px;margin:14px 0}
+.builder-feedback.good{background:#e0f5e7;border-color:#268451}
+.builder-feedback.needs-work{background:#fff0e7;border-color:#b7633c}
+.builder-steps{background:#ffffff;padding:12px 16px;border-radius:11px;border:1px solid #d1e7ed;line-height:1.65}
+.builder-steps strong{color:#063966}
+.builder-saved{font-size:15px;color:#42667d}
+.builder-finale{background:linear-gradient(120deg,#05345e,#07859e);color:#fff;padding:25px;border-radius:18px;margin-top:20px}
+.builder-finale h2{color:#fff}
+.builder-finale p{font-size:18px;line-height:1.6}
+.builder-finale button{padding:13px 16px;border:0;border-radius:10px;background:#d0f9fe;color:#05345e;font-weight:850;cursor:pointer}
+.area-print-sheet{display:none}
+@media(max-width:950px){.builder-areas{grid-template-columns:1fr}}
+@media(max-width:650px){.area-stats{grid-template-columns:repeat(2,1fr)}.game-banner{gap:8px}.builder-info{padding:16px}.area-builder{padding:17px}.builder-target{font-size:37px}}
+@media print{
+ .area-print-sheet{display:block!important;page-break-before:always;color:#111;padding:0}
+ .area-print-sheet h2{font-size:20pt;color:#000}
+ .area-print-sheet p{font-size:11pt}
+ .print-centimeter-grid{width:18cm;height:12cm;border:1px solid #333;background-image:linear-gradient(to right,#b4c4cb 1px,transparent 1px),linear-gradient(to bottom,#b4c4cb 1px,transparent 1px);background-size:1cm 1cm;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+ .area-builder,.game-banner{display:none!important}
+}
 </style></head>
 <body><a href="#atividade" class="skip">Ir para a atividade</a>
 <header><div class="wrap head"><a href="../index.html" class="brand"><span class="jp-logo-pair" aria-label="Marcas institucionais"><img src="../assets/logo-jp-original.svg" alt="Escola João Paulo I"><img src="../assets/logo-eti-original.svg" alt="Escola de Tempo Integral MT"></span><span><small>ESCOLA ESTADUAL JOÃO PAULO I</small><strong>JP Recomposição</strong></span></a><a href="../componentes/matematica.html" style="color:#92eff4">← Matemática</a></div></header>
 <main id="atividade" class="area-shell">
 <section class="area-intro"><span class="eyebrow">MATEMÁTICA · GEOMETRIA · RECOMPOSIÇÃO</span><h1>Áreas de figuras planas<br>na malha quadriculada</h1>
 <p>Observe as figuras no GeoGebra, conte os quadradinhos e descubra a área de retângulos, triângulos e figuras compostas. Você aprenderá a relacionar a malha com as fórmulas, uma questão de cada vez.</p>
-<p><strong>Cada quadradinho mede 1 cm × 1 cm e tem área de 1 cm².</strong></p></section>
-<div class="area-stats"><div class="area-stat"><small>Questão</small><strong id="area-position">1 / 12</strong></div><div class="area-stat"><small>Acertos</small><strong id="area-hits">0</strong></div><div class="area-stat"><small>Progresso</small><strong id="area-percent">0%</strong></div></div>
+<p><strong>Cada intervalo da malha representa 1 cm. Cada quadradinho representa 1 cm². Na tela, a medida é uma escala matemática, não necessariamente 1 cm físico.</strong></p><span class="game-pill">★ Ganhe pontos a cada desafio</span><span class="game-pill">◆ Construa suas próprias figuras</span><span class="game-pill">✓ Receba dicas para corrigir</span></section>
+<div class="game-banner" id="game-banner"><span class="game-badge" id="game-rank">EXPLORADOR</span><strong id="game-xp">0 XP</strong><span id="game-message">Complete a exploração para desbloquear a construção de figuras.</span></div>
+<div class="area-stats"><div class="area-stat"><small>Questão</small><strong id="area-position">1 / 12</strong></div><div class="area-stat"><small>Acertos</small><strong id="area-hits">0</strong></div><div class="area-stat"><small>Progresso</small><strong id="area-percent">0%</strong></div><div class="area-stat"><small>Construções</small><strong id="build-progress">0 / 8</strong></div></div>
 <div class="area-stage-list" id="area-stages"><span class="active">1 · Retângulos e quadrados</span><span>2 · Triângulos</span><span>3 · Figuras compostas</span></div>
 <div class="area-meter" aria-label="Progresso"><div id="area-meter-fill"></div></div>
 <div class="area-layout">
@@ -79,9 +127,33 @@
 <button id="area-next" type="button" class="area-next" disabled>Responda para avançar</button>
 </section></div>
 <section id="area-complete" class="area-done" hidden><h2>Trilha concluída!</h2><p id="area-summary"></p><p>Revise as explicações das questões e converse com seu professor sobre as estratégias utilizadas. Este resultado é formativo e não substitui a avaliação escolar.</p><div class="area-report"><button type="button" id="area-download">Baixar resultados (CSV)</button><button type="button" id="area-restart">Refazer a trilha</button></div><p id="area-report-status" aria-live="polite"></p></section>
+<section class="area-builder" id="area-builder" aria-labelledby="builder-heading" hidden>
+  <span class="eyebrow">MISSÃO 2 · LABORATÓRIO DE CONSTRUÇÃO</span>
+  <h2 id="builder-heading">Arquiteto das áreas</h2>
+  <p class="builder-brief">Agora você é o construtor! Na malha de intervalos de <strong>1 cm</strong>, construa a figura pedida com a área exata. Toque em pontos da malha para criar a figura. Se errar, a atividade mostrará como melhorar e você poderá tentar novamente.</p>
+  <div class="area-stage-list"><span>8 missões de construção</span><span>Retângulos e quadrados</span><span>Triângulos</span><span>Nova chance após cada erro</span></div>
+  <div class="builder-areas">
+    <div class="builder-board"><svg id="builder-svg" viewBox="0 0 600 440" role="img" aria-label="Malha de construção; selecione os pontos para definir a figura" tabindex="0"></svg><p class="board-help">Cada linha da malha representa 1 cm. Toque ou clique nos vértices. Se estiver usando teclado, use os controles de coordenadas abaixo.</p>
+      <div class="builder-buttons"><button type="button" class="secondary" id="build-undo">Desfazer último ponto</button><button type="button" class="secondary" id="build-clear">Recomeçar figura</button><button type="button" class="secondary" id="build-ggb">Ver construção no GeoGebra</button></div>
+      <div class="builder-buttons" id="build-keyboard"><label>Coluna <select id="build-x"></select></label><label>Linha <select id="build-y"></select></label><button type="button" id="build-add-point">Adicionar ponto</button></div>
+    </div>
+    <div class="builder-info">
+      <span class="builder-taskkind" id="build-kind">MISSÃO 1 / 8</span>
+      <h3 id="build-task">Desenhe um retângulo</h3>
+      <div class="builder-target" id="build-target">12 cm²</div>
+      <p class="builder-instruction" id="build-instructions">Marque dois cantos opostos da figura.</p>
+      <div class="builder-steps"><strong>Meu projeto:</strong><div id="build-measures">Marque o primeiro ponto na malha.</div></div>
+      <p class="builder-feedback" id="build-feedback" role="status" aria-live="polite">Vamos começar. Cada quadradinho vale 1 cm².</p>
+      <div class="builder-buttons"><button type="button" id="build-check">Conferir minha construção</button><button type="button" id="build-next" disabled>Próxima missão →</button><button type="button" class="secondary" id="build-hint">Preciso de uma dica</button></div>
+      <div class="builder-saved" id="build-trail">Missões concluídas: 0/8 · Tentativas nesta missão: 0</div>
+    </div>
+  </div>
+</section>
+<section class="builder-finale" id="builder-finale" hidden><h2>🏆 Construtor de áreas!</h2><p id="builder-final-message"></p><div class="builder-buttons"><button type="button" id="builder-download">Baixar relatório da aula (CSV)</button><button type="button" id="builder-repeat">Refazer missões</button></div><p id="builder-download-status" aria-live="polite"></p></section>
+<section class="area-print-sheet"><h2>JP Recomposição — Malha quadriculada de 1 cm</h2><p>Nome: __________________________ Turma: ______ Data: ____/____/_____</p><p>Desenhe um retângulo com 12 cm² e um triângulo com 6 cm². Registre suas contas e explique a diferença entre perímetro e área.</p><div class="print-centimeter-grid"></div><p>Minha justificativa: ____________________________________________________________________________</p></section>
 <section class="area-panel area-guide" aria-labelledby="area-teacher-title"><h2 id="area-teacher-title">Orientações de estudo e acompanhamento</h2>
 <details open><summary>Para o estudante: como resolver</summary><ol><li>Observe a figura sobre a malha quadriculada.</li><li>Conte os quadradinhos inteiros. Em triângulos, procure metades de quadradinhos.</li><li>Calcule a área no caderno. Você pode comparar com a fórmula correspondente.</li><li>Clique em uma das quatro alternativas e leia o feedback.</li><li>Após responder, experimente movimentar os vértices no GeoGebra. Restaure a figura para manter o desenho original.</li></ol></details>
-<details><summary>Para o professor: proposta de recomposição</summary><p><strong>Objetivo:</strong> reconhecer a unidade de área, decompor figuras e compreender as relações A = base × altura, A = (base × altura)/2 e a soma de áreas em figuras compostas. Organize uma exploração orientada com malha quadriculada impressa: peça que o estudante desenhe a figura, registre as medidas, calcule a área e justifique oralmente. As 12 questões estão distribuídas em 3 níveis com 4 itens cada. O registro CSV é local e não exige identificação pessoal.</p></details>
+<details><summary>Para o professor: proposta de recomposição</summary><p><strong>Objetivo:</strong> reconhecer a unidade de área, decompor figuras e compreender as relações A = base × altura, A = (base × altura)/2 e a soma de áreas em figuras compostas. Organize uma exploração orientada com malha quadriculada impressa: peça que o estudante desenhe a figura, registre as medidas, calcule a área e justifique oralmente. A aula possui 12 questões de investigação e 8 missões de construção por vértices na malha. Oriente as tentativas, aproveitando o feedback para intervir sobre base, altura, fórmulas e contagem de quadradinhos. O registro CSV é local e não exige identificação pessoal.</p></details>
 <details><summary>Fórmulas de apoio</summary><p><strong>Retângulo:</strong> A = base × altura. <strong>Triângulo:</strong> A = (base × altura) ÷ 2. <strong>Trapézio:</strong> A = (base maior + base menor) × altura ÷ 2. <strong>Figura em L:</strong> divida em retângulos ou subtraia o recorte.</p></details>
 </section>
 </main>
@@ -143,7 +215,7 @@ function render(){
  $('area-level').textContent='NÍVEL '+(stage+1)+' · '+levels[stage];
  $('area-question').textContent='Qual é a área da figura colorida?';
  $('area-prompt').textContent=item.text;
- $('area-figure-note').textContent='1 quadradinho = 1 cm². Observe e conte as unidades.';
+ $('area-figure-note').textContent='Distância entre linhas: 1 cm. Cada quadradinho vale 1 cm².';
  $('area-feedback').className='area-feedback';$('area-feedback').textContent='Observe a malha, faça o cálculo e escolha uma alternativa.';
  $('area-next').disabled=true;$('area-next').textContent='Responda para avançar';
  $('area-explore').disabled=true;$('area-explore-message').textContent='Após responder, você poderá mover os vértices no GeoGebra.';
