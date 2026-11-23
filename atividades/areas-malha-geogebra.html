@@ -66,6 +66,29 @@ body{background:#f1f7fa}.game-wrap{max-width:1200px;margin:0 auto;padding:22px 1
  .print-grid h2{font-size:22pt}.print-grid p{font-size:11pt}
  .print-centimeter{width:18cm;height:12cm;max-width:none;border:1px solid #555;background-image:linear-gradient(to right,#c2ccd2 1px,transparent 1px),linear-gradient(to bottom,#c2ccd2 1px,transparent 1px);background-size:1cm 1cm;print-color-adjust:exact;-webkit-print-color-adjust:exact}
  @page{size:A4;margin:15mm}}
+
+/* Paleta da missão gamificada: áreas por cores, conquistas e estados */
+.game-hud>div:nth-child(1){background:#e2f6ff;border-color:#9edcf2}
+.game-hud>div:nth-child(2){background:#ecf8ee;border-color:#aedfba}
+.game-hud>div:nth-child(3){background:#fff3cf;border-color:#f4d481}
+.game-hud>div:nth-child(4){background:#f0e7ff;border-color:#d4b8f7}
+.game-hud>div:nth-child(3) strong{color:#a56c02}
+.game-hud>div:nth-child(4) strong{color:#6c3ac0}
+.game-tabs span.active{background:linear-gradient(115deg,#063966,#078da7);box-shadow:0 5px 13px #06396628}
+.game-card:has(#area-grid){border-top:6px solid #05c9dc}
+.game-card:has(#task-heading){border-top:6px solid #8f6af4}
+.game-options button:nth-child(1){background:#eff7ff}
+.game-options button:nth-child(2){background:#fff6e8}
+.game-options button:nth-child(3){background:#f1eafa}
+.game-options button:nth-child(4){background:#eaf8ee}
+.game-options button.correct{background:#d6f5e5}
+.game-options button.wrong{background:#ffdedb}
+#build-target{display:inline-block;background:#fff0cd;border:2px solid #f1ce72;border-radius:15px;padding:11px 16px}
+#build-measures{border-left:4px solid #08a8b6}
+.game-feedback.right{font-weight:700}
+.game-btn:hover:not(:disabled){filter:brightness(1.07);transform:translateY(-1px)}
+.game-btn{transition:transform .14s,filter .14s}
+@media(prefers-reduced-motion:reduce){.game-btn,.game-progress>div{transition:none}}
 </style></head>
 <body><a class="skip" href="#main">Ir à aula</a>
 <header><div class="wrap head"><a href="../index.html" class="brand"><span class="jp-logo-pair" aria-label="Logos da escola"><img src="../assets/logo-jp-original.svg" alt="Escola João Paulo I"><img src="../assets/logo-eti-original.svg" alt="Escola de Tempo Integral MT"></span><span><small>ESCOLA ESTADUAL JOÃO PAULO I</small><strong>JP Recomposição</strong></span></a><a href="../componentes/matematica.html" style="color:#87eaf5">← Matemática</a></div></header>
@@ -74,7 +97,7 @@ body{background:#f1f7fa}.game-wrap{max-width:1200px;margin:0 auto;padding:22px 1
 <h1>Desafio das Áreas<br>na Malha Quadriculada</h1>
 <p>Uma aula gamificada para aprender fazendo: observe a malha, conte unidades quadradas, resolva desafios e construa figuras com a área solicitada.</p>
 <p><strong>Distância entre linhas: 1 cm na escala matemática. Cada quadradinho representa 1 cm².</strong></p>
-<div class="game-pills"><span>Sem GeoGebra</span><span>20 desafios</span><span>Questões com alternativas</span><span>Construção por pontos</span><span>Erros explicados</span></div>
+<div class="game-pills"><span>🎨 Malha colorida</span><span>🏆 20 desafios</span><span>⭐ Conquistas e XP</span><span>🧩 Construção por pontos</span><span>💡 Dicas a cada erro</span></div>
 </section>
 <div class="game-hud"><div><small>Fase atual</small><strong id="hud-phase">1 / 2</strong></div><div><small>Progresso</small><strong id="hud-progress">0 / 20</strong></div><div><small>Pontuação</small><strong id="hud-xp">0 XP</strong></div><div><small>Conquista</small><strong id="hud-rank">Explorador</strong></div></div>
 <div class="game-progress" aria-label="Progresso da aula"><div id="hud-meter"></div></div>
