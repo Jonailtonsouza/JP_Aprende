@@ -97,7 +97,7 @@ function distractors(task){
 }
 function hud(){
  const stage=Math.min(4,Math.floor(position/5));
- $('ct-station').textContent=(stage+1)+' / 5';$('ct-progress').textContent=completed+' / 25';$('ct-xp').textContent=score+' XP';
+ $('ct-station').textContent=(stage+1)+' / 5';$('ct-progress').textContent=completed+' / 25';$('ct-xp').textContent=Math.round(score/5)+' JPs';
  $('ct-rank').textContent=completed>=25?'Mestre da multiplicação':completed>=20?'Estrategista':completed>=15?'Construtor':completed>=10?'Investigador':completed>=5?'Explorador':'Iniciante';
  $('ct-meter').style.width=(completed/25*100)+'%';
  [...$('ct-map').children].forEach((e,i)=>{e.className='ct-node'+(i<stage?' done':i===stage?' current':'')});
@@ -176,7 +176,7 @@ function choose(value){
  const earned=tries===1?(usedHints?15:20):10;score+=earned;
  records.push({station:Math.floor(position/5)+1,activity:stations[Math.floor(position/5)].name,question:position+1,multiplication:task.a+'×'+task.b,answer:actual,tries,hints:usedHints,explored:revealed,points:earned,correct:true});
  [...$('ct-options').children].forEach(b=>{b.disabled=true;if(Number(b.dataset.value)===actual)b.classList.add('correct')});
- feedback('🎉 Conseguiu! +'+earned+' XP. '+strategy(task),'correct');
+ feedback('🎉 Conseguiu! +'+earned+' JPs. '+strategy(task),'correct');
  $('ct-next').disabled=false;$('ct-next').textContent=position===24?'Concluir circuito 🏆':(position%5===4?'Desbloquear próxima estação 🚀':'Próximo desafio →');
  $('ct-attempts').textContent='Acertou em '+tries+' tentativa(s). A estratégia importa mais que a rapidez.';
  hud();
@@ -199,7 +199,7 @@ $('ct-next').addEventListener('click',()=>{if(!answered)return;position++;render
 function finish(){
  $('ct-stage').hidden=true;$('ct-finish').hidden=false;hud();
  $('ct-station').textContent='5 / 5';
- $('ct-summary').textContent='Você concluiu os 25 desafios e conquistou '+score+' XP. Acertou '+firstTryCorrect+' na primeira tentativa. O mais importante é que utilizou grupos, saltos, arranjos e decomposição para compreender a multiplicação. Consulte seus resultados e explique ao professor uma estratégia que aprendeu.';
+ $('ct-summary').textContent='Você concluiu os 25 desafios e conquistou '+score+' JPs. Acertou '+firstTryCorrect+' na primeira tentativa. O mais importante é que utilizou grupos, saltos, arranjos e decomposição para compreender a multiplicação. Consulte seus resultados e explique ao professor uma estratégia que aprendeu.';
  $('ct-finish').scrollIntoView({behavior:'smooth',block:'start'});
 }
 function csvCell(value){let s=String(value??'').replace(/[\r\n]+/g,' ');if(/^[=+@\t]/.test(s)||/^-(?!\d)/.test(s))s="'"+s;return '"'+s.replace(/"/g,'""')+'"'}
@@ -218,3 +218,5 @@ $('ct-replay').addEventListener('click',()=>{
  $('ct-stage').hidden=false;$('ct-finish').hidden=true;render();window.scrollTo({top:0,behavior:'smooth'});
 });
 render();
+function exportJPsTabuada(){return JPPontos.exportar({atividade:'circuito-tabuada',concluida:completed>=25,jps:Math.round(score/5)})}
+document.getElementById('ct-jps').addEventListener('click',exportJPsTabuada);
