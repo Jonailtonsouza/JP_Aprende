@@ -97,9 +97,9 @@ body{background:#f1f7fa}.game-wrap{max-width:1200px;margin:0 auto;padding:22px 1
 <h1>Desafio das Áreas<br>na Malha Quadriculada</h1>
 <p>Uma aula gamificada para aprender fazendo: observe a malha, conte unidades quadradas, resolva desafios e construa figuras com a área solicitada.</p>
 <p><strong>Distância entre linhas: 1 cm na escala matemática. Cada quadradinho representa 1 cm².</strong></p>
-<div class="game-pills"><span>🎨 Malha colorida</span><span>🏆 20 desafios</span><span>⭐ Conquistas e XP</span><span>🧩 Construção por pontos</span><span>💡 Dicas a cada erro</span></div>
+<div class="game-pills"><span>🎨 Malha colorida</span><span>🏆 20 desafios</span><span>⭐ Conquistas e JPs</span><span>🧩 Construção por pontos</span><span>💡 Dicas a cada erro</span></div>
 </section>
-<div class="game-hud"><div><small>Fase atual</small><strong id="hud-phase">1 / 2</strong></div><div><small>Progresso</small><strong id="hud-progress">0 / 20</strong></div><div><small>Pontuação</small><strong id="hud-xp">0 XP</strong></div><div><small>Conquista</small><strong id="hud-rank">Explorador</strong></div></div>
+<div class="game-hud"><div><small>Fase atual</small><strong id="hud-phase">1 / 2</strong></div><div><small>Progresso</small><strong id="hud-progress">0 / 20</strong></div><div><small>Pontuação</small><strong id="hud-xp">0 JPs</strong></div><div><small>Conquista</small><strong id="hud-rank">Explorador</strong></div></div>
 <div class="game-progress" aria-label="Progresso da aula"><div id="hud-meter"></div></div>
 <div class="game-tabs" aria-label="Etapas da aula"><span class="active" id="tab-1">1 · Descobrir áreas (12)</span><span id="tab-2">2 · Construir figuras (8)</span></div>
 <div class="game-main" id="game-main">
@@ -119,7 +119,7 @@ body{background:#f1f7fa}.game-wrap{max-width:1200px;margin:0 auto;padding:22px 1
 <p id="tries-label" class="build-mini"></p>
 </section>
 </div>
-<section id="game-finish" class="game-finish" hidden><h2>🏆 Missão Geometria concluída!</h2><p id="finish-summary"></p><div class="game-controls"><button class="game-btn" id="download-report" type="button">Baixar relatório CSV</button><button class="game-btn" id="restart" type="button">Refazer aula</button></div><p id="report-status" role="status"></p></section>
+<section id="game-finish" class="game-finish" hidden><h2>🏆 Missão Geometria concluída!</h2><p id="finish-summary"></p><div class="game-controls"><button class="game-btn" id="area-jps" type="button">🏅 Baixar comprovante JPs</button><button class="game-btn" id="download-report" type="button">Baixar relatório CSV</button><button class="game-btn" id="restart" type="button">Refazer aula</button></div><p id="report-status" role="status"></p></section>
 <section class="game-teacher"><div class="game-card"><h2>Orientações para aprender e ensinar</h2>
 <details open><summary>Como o estudante realiza a aula?</summary><p><strong>Fase 1:</strong> observe 12 figuras, conte os quadradinhos, calcule e escolha uma das quatro respostas. A malha não apresenta medidas de lados nem área calculada antes da conferência. <strong>Fase 2:</strong> construa 8 figuras marcando pontos da malha; para retângulos, marque dois cantos opostos, e para triângulos, três vértices, com os dois primeiros na mesma linha. Se errar, leia a orientação e tente novamente.</p></details>
 <details><summary>Objetivos pedagógicos da recomposição</summary><p>Reconhecer unidade de área, diferenciar área de perímetro, associar base e altura às quadrículas, decompor figuras compostas e estabelecer as fórmulas por investigação. Alternar contagem, comparação, previsão e explicação oral. Proponha que o estudante desenhe no caderno uma figura diferente com a mesma área.</p></details>
@@ -128,4 +128,4 @@ body{background:#f1f7fa}.game-wrap{max-width:1200px;margin:0 auto;padding:22px 1
 <details><summary>Resultados e privacidade</summary><p>Os registros ficam nesta sessão e são exportados em CSV apenas quando solicitados. O portal não coleta nome nem matrícula, não envia respostas à escola automaticamente e não substitui avaliações oficiais.</p></details></div></section>
 <section class="print-grid"><h2>JP Recomposição — Malha de quadrados de 1 cm</h2><p>Estudante: __________________________________ Turma: __________ Data: ____/____/______</p><p>Construa um retângulo com área de 12 cm² e um triângulo com área de 6 cm². Justifique as medidas escolhidas.</p><div class="print-centimeter"></div><p>Minha justificativa: _________________________________________________________________________</p><p>Imprima em tamanho real, escala 100%, sem ajustar à página. Meça um quadradinho com régua.</p></section>
 </main><footer><div class="wrap foot"><strong>JP Recomposição · Aprender, superar e avançar.</strong><small>EE João Paulo I · Paranaíta–MT</small></div></footer>
-<script src="areas-interativas.js?v=2"></script></body></html>
+<script src="jp-pontos.js?v=1"></script><script src="areas-interativas.js?v=jps-1"></script></body></html>
