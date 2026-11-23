@@ -601,3 +601,24 @@ body.home-page{
  .learning-home .learn-hero .hero-watermarks .watermark-jp{left:-18%;top:13%}
  .learning-home .learn-hero .hero-watermarks .watermark-eti{right:-23%;bottom:6%}
 }
+
+
+/* Logos oficiais independentes também nas páginas de componentes e atividades */
+.jp-logo-pair{
+  display:inline-flex;align-items:center;gap:12px;flex:0 0 auto;
+  background:#fff;border-radius:10px;padding:3px 7px;
+}
+.jp-logo-pair img{display:block;height:57px;width:auto;max-width:165px;object-fit:contain;}
+.jp-logo-pair img:last-child{max-width:190px;}
+.learning-home .learn-brand:has(.jp-logo-pair){gap:10px}
+@media(max-width:1080px){
+ .jp-logo-pair{gap:5px;padding:3px 5px}
+ .jp-logo-pair img{height:46px;max-width:105px}
+ .jp-logo-pair img:last-child{max-width:120px}
+}
+@media(max-width:650px){
+ .jp-logo-pair img{height:37px;max-width:78px}
+ .jp-logo-pair img:last-child{max-width:95px}
+ .learning-home .learn-brand:has(.jp-logo-pair)>span:last-child{display:none}
+ .brand:has(.jp-logo-pair)>span:last-child{display:none}
+}
