@@ -53,7 +53,7 @@ function boardDraw(){
  });
  if(!poly){$('build-measures').textContent='Pontos marcados: '+vertices.length+'. Marque '+(tasks[taskIndex][0]==='triangle'?3:2)+' pontos para formar a figura.';return}
  const dx=Math.abs(vertices[1][0]-vertices[0][0]),dy=tasks[taskIndex][0]==='triangle'?Math.abs(vertices[2][1]-vertices[0][1]):Math.abs(vertices[1][1]-vertices[0][1]);
- $('build-measures').textContent='Base: '+dx+' cm · Altura: '+dy+' cm · Área: '+polygonArea(poly)+' cm².';
+ $('build-measures').textContent='Base: '+dx+' cm · Altura: '+dy+' cm. Calcule a área antes de conferir sua construção.';
 }
 function feedbackBuild(message,status=''){
  const p=$('build-feedback');p.textContent=message;p.className='builder-feedback'+(status?' '+status:'');
@@ -142,6 +142,7 @@ $('build-ggb').onclick=()=>{
  if(!geoLoaded){feedbackBuild('O GeoGebra está indisponível. Sua malha interativa continua funcionando.');return}
  try{
   geo.newConstruction();geo.setAxesVisible(true,true);geo.setGridVisible(true);geo.setCoordSystem(0,13,0,10);
+  if(typeof geo.setAxisSteps==='function')geo.setAxisSteps(1,1,1,1);
   if(geo.setGraphicsOptions)geo.setGraphicsOptions(1,{grid:true,gridType:0,gridDistance:[1,1]});
   pts.forEach((p,i)=>geo.evalCommand('P'+(i+1)+'=('+p[0]+','+p[1]+')'));
   geo.evalCommand('Projeto=Polygon('+pts.map((_,i)=>'P'+(i+1)).join(',')+')');
