@@ -107,7 +107,7 @@
 <main id="atividade" class="area-shell">
 <section class="area-intro"><span class="eyebrow">MATEMÁTICA · GEOMETRIA · RECOMPOSIÇÃO</span><h1>Áreas de figuras planas<br>na malha quadriculada</h1>
 <p>Observe as figuras no GeoGebra, conte os quadradinhos e descubra a área de retângulos, triângulos e figuras compostas. Você aprenderá a relacionar a malha com as fórmulas, uma questão de cada vez.</p>
-<p><strong>Cada intervalo da malha representa 1 cm. Cada quadradinho representa 1 cm². Na tela, a medida é uma escala matemática, não necessariamente 1 cm físico.</strong></p><span class="game-pill">★ Ganhe pontos a cada desafio</span><span class="game-pill">◆ Construa suas próprias figuras</span><span class="game-pill">✓ Receba dicas para corrigir</span></section>
+<p><strong>Cada intervalo dos eixos representa 1 cm e cada quadradinho representa 1 cm². Na tela, essa é uma escala matemática, não necessariamente 1 cm físico.</strong></p><span class="game-pill">★ Ganhe pontos a cada desafio</span><span class="game-pill">◆ Construa suas próprias figuras</span><span class="game-pill">✓ Receba dicas para corrigir</span></section>
 <div class="game-banner" id="game-banner"><span class="game-badge" id="game-rank">EXPLORADOR</span><strong id="game-xp">0 XP</strong><span id="game-message">Complete a exploração para desbloquear a construção de figuras.</span></div>
 <div class="area-stats"><div class="area-stat"><small>Questão</small><strong id="area-position">1 / 12</strong></div><div class="area-stat"><small>Acertos</small><strong id="area-hits">0</strong></div><div class="area-stat"><small>Progresso</small><strong id="area-percent">0%</strong></div><div class="area-stat"><small>Construções</small><strong id="build-progress">0 / 8</strong></div></div>
 <div class="area-stage-list" id="area-stages"><span class="active">1 · Retângulos e quadrados</span><span>2 · Triângulos</span><span>3 · Figuras compostas</span></div>
@@ -186,8 +186,8 @@ function fallbackFigure(item){
  const unit=36,ox=55,oy=398;
  for(let x=0;x<=13;x++)el('line',{x1:ox+x*unit,y1:oy-10*unit,x2:ox+x*unit,y2:oy,stroke:'#cee6ed','stroke-width':x===0?2:1});
  for(let y=0;y<=10;y++)el('line',{x1:ox,y1:oy-y*unit,x2:ox+13*unit,y2:oy-y*unit,stroke:'#cee6ed','stroke-width':y===0?2:1});
- for(let x=0;x<=12;x+=2){const text=el('text',{x:ox+x*unit,y:oy+17,'text-anchor':'middle',fill:'#456c7d','font-size':12});text.textContent=x}
- for(let y=0;y<=10;y+=2){const text=el('text',{x:ox-13,y:oy-y*unit+4,'text-anchor':'middle',fill:'#456c7d','font-size':12});text.textContent=y}
+ for(let x=0;x<=13;x++){const text=el('text',{x:ox+x*unit,y:oy+17,'text-anchor':'middle',fill:'#456c7d','font-size':12});text.textContent=x}
+ for(let y=0;y<=10;y++){const text=el('text',{x:ox-13,y:oy-y*unit+4,'text-anchor':'middle',fill:'#456c7d','font-size':12});text.textContent=y}
  const polyPoints=item.pts.map(p=>(ox+p[0]*unit)+','+(oy-p[1]*unit)).join(' ');
  el('polygon',{points:polyPoints,fill:'#00a5bd','fill-opacity':'.42',stroke:'#063966','stroke-width':4,'stroke-linejoin':'round'});
  for(const p of item.pts)el('circle',{cx:ox+p[0]*unit,cy:oy-p[1]*unit,r:5,fill:'#063966',stroke:'white','stroke-width':2});
@@ -196,6 +196,7 @@ function geoFigure(item,unlock){
  if(!geo)return;
  try{
   geo.newConstruction();geo.setAxesVisible(true,true);geo.setGridVisible(true);geo.setCoordSystem(0,13,0,10);
+  if(typeof geo.setAxisSteps==='function')geo.setAxisSteps(1,1,1,1);
   if(geo.setGraphicsOptions)geo.setGraphicsOptions(1,{grid:true,gridType:0,gridDistance:[1,1],pointCapturing:2});
   const labels=['A','B','C','D','E','F'];
   item.pts.forEach((p,i)=>geo.evalCommand(labels[i]+'=('+p[0]+','+p[1]+')'));
@@ -215,7 +216,8 @@ function render(){
  $('area-level').textContent='NÍVEL '+(stage+1)+' · '+levels[stage];
  $('area-question').textContent='Qual é a área da figura colorida?';
  $('area-prompt').textContent=item.text;
- $('area-figure-note').textContent='Distância entre linhas: 1 cm. Cada quadradinho vale 1 cm².';
+ const formulaNote=cursor===0?'Fórmula de apoio: A = base × altura.':cursor===4?'Fórmula de apoio: A = (base × altura) ÷ 2.':cursor===8?'Estratégia: divida a figura em retângulos e some suas áreas.':cursor===10?'Fórmula de apoio: A = (B + b) × altura ÷ 2.':'';
+ $('area-figure-note').textContent='Eixos numerados de 1 em 1. Cada quadradinho representa 1 cm².'+(formulaNote?' '+formulaNote:'');
  $('area-feedback').className='area-feedback';$('area-feedback').textContent='Observe a malha, faça o cálculo e escolha uma alternativa.';
  $('area-next').disabled=true;$('area-next').textContent='Responda para avançar';
  $('area-explore').disabled=true;$('area-explore-message').textContent='Após responder, você poderá mover os vértices no GeoGebra.';
@@ -261,7 +263,7 @@ function download(){
 $('area-next').addEventListener('click',()=>{if(!answered)return;cursor++;render()});
 $('area-show-tip').addEventListener('click',()=>{
  const i=activities[cursor],hint=i.kind==='rectangle'?'Conte quantos quadradinhos cabem na base e na altura. Multiplique.':i.kind==='triangle'?'Ache a base e a altura: o triângulo ocupa metade de um paralelogramo ou retângulo de mesma base e altura.':i.kind==='trapezoid'?'Some as duas bases, multiplique pela altura e divida por 2.':'Divida a figura em dois retângulos e some as áreas.';
- $('area-figure-note').textContent='DICA: '+hint;
+ $('area-figure-note').textContent='DICA: '+hint+' A área será apresentada após a escolha de uma alternativa.';
 });
 $('area-reset-figure').addEventListener('click',()=>{drawFigure();$('area-explore-message').textContent='Figura original restaurada. Cada quadradinho mede 1 cm².'});
 $('area-explore').addEventListener('click',()=>{if(!answered||!geoLoaded)return;geoFigure(activities[cursor],true);$('area-explore-message').textContent='Arraste os pontos no GeoGebra e observe como a área varia. Clique em Restaurar a figura antes de comparar a resposta original.'});
