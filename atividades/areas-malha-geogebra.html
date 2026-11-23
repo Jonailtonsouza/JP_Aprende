@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#063966"><meta name="description" content="Trilha interativa de recomposição de áreas de figuras planas com malha quadriculada no GeoGebra, 12 desafios e devolutiva.">
+<title>Áreas de Figuras Planas | JP Recomposição</title><link rel="stylesheet" href="../style.css">
+<style>
+:root{--area-blue:#063966;--area-teal:#008aa7;--area-cyan:#05c9dc}
+.area-shell{max-width:1200px;margin:0 auto;padding:28px 20px 70px}
+.area-intro{background:linear-gradient(128deg,#063966,#087d99);color:#fff;padding:clamp(25px,5vw,48px);border-radius:24px;margin:12px 0 22px}
+.area-intro .eyebrow{color:#9beef4}.area-intro h1{font-size:clamp(34px,5vw,59px);letter-spacing:-.04em;line-height:1.12;margin:10px 0 15px;color:#fff}
+.area-intro p{font-size:clamp(17px,2vw,21px);line-height:1.55;color:#e0f5f8;max-width:880px}
+.area-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:17px 0}
+.area-stat{background:white;border:1px solid #cce4ec;border-radius:15px;padding:17px}
+.area-stat small{display:block;font-size:13px;color:#536e7d}.area-stat strong{font-size:clamp(24px,3vw,36px);color:#063966}
+.area-stage-list{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
+.area-stage-list span{padding:10px 14px;background:#eef8fb;color:#315c75;font-size:14px;font-weight:750;border:1px solid #cde4eb;border-radius:30px}
+.area-stage-list span.active{background:#063966;color:#fff}
+.area-stage-list span.complete{background:#e4f6eb;color:#1f744b}
+.area-meter{height:13px;border-radius:20px;background:#d5e8ed;overflow:hidden;margin:14px 0 20px}
+.area-meter div{height:100%;width:0;background:#008aa7;transition:width .2s}
+.area-layout{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(310px,.95fr);gap:20px;align-items:start}
+.area-panel{background:#fff;border:1px solid #d1e5eb;border-radius:19px;padding:23px;min-width:0;box-shadow:0 8px 25px rgba(5,48,96,.07)}
+.area-panel h2{font-size:clamp(24px,3vw,33px);color:#063966;margin:0 0 13px}
+.area-panel h3{font-size:clamp(23px,2.5vw,29px);color:#063966;margin:10px 0 18px}
+.area-panel p,.area-panel li{font-size:16px;line-height:1.6}
+.area-figure-note{color:#35596b;font-weight:700;background:#e9f8fb;border-left:4px solid #008aa7;padding:10px 13px;border-radius:7px}
+.area-graph{position:relative;width:100%;min-height:440px;border-radius:13px;border:1px solid #b8d9e3;background:#faffff;overflow:hidden}
+#ggb-container{width:100%;height:440px}
+#grid-fallback{position:absolute;inset:0;width:100%;height:100%;background:#fbffff}
+.area-geostatus{color:#456b7a;font-size:13px;margin:10px 0}
+.area-actions{display:flex;flex-wrap:wrap;gap:9px;margin:14px 0}
+.area-actions button,.area-actions a,.area-next{border-radius:11px;border:2px solid #137b95;min-height:44px;padding:10px 15px;font-size:15px;font-weight:780;cursor:pointer;color:#064269;background:#e9f8fb;text-decoration:none}
+.area-actions button:disabled,.area-next:disabled{opacity:.5;cursor:default}
+.area-answer-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+.area-answer-grid button{min-height:76px;background:#f8fcfd;border:2px solid #b6d6e0;border-radius:13px;color:#063966;font-size:clamp(23px,3vw,32px);font-weight:850;cursor:pointer}
+.area-answer-grid button:focus-visible,.area-actions button:focus-visible{outline:3px solid #00a5bb;outline-offset:2px}
+.area-answer-grid button.correct{background:#ddf4e8;border-color:#248657}
+.area-answer-grid button.wrong{background:#fbe6e4;border-color:#bc5546}
+.area-answer-grid button:disabled{cursor:default}
+.area-answer-grid button:not(:disabled):hover{background:#dff6fa;border-color:#008aa7}
+.area-feedback{padding:16px 17px;background:#f0f7fa;border-left:5px solid #008aa7;border-radius:10px;line-height:1.65;font-size:17px}
+.area-feedback.positive-feedback{background:#e9f8ef;border-color:#238557}
+.area-feedback.review-feedback{background:#fff2ec;border-color:#c77244}
+.area-next{background:#063966;color:white;border-color:#063966;margin-top:15px}
+.area-next:hover:not(:disabled){background:#008aa7}
+.area-guide{margin-top:23px}
+.area-guide details{margin:9px 0;border:1px solid #d2e8ec;border-radius:10px;padding:12px 14px}
+.area-guide summary{font-weight:800;color:#063966;cursor:pointer}
+.area-done{background:#eef9f7;padding:25px;border-radius:18px;margin-top:21px}
+.area-done h2{font-size:30px;color:#063966}
+.area-done strong{color:#063966}
+.area-report{display:flex;flex-wrap:wrap;gap:12px;margin-top:15px}
+.area-report button{border:0;border-radius:11px;padding:13px 18px;background:#063966;color:white;font-weight:800;cursor:pointer}
+.area-report button:last-child{background:#008aa7}
+@media(max-width:950px){.area-layout{grid-template-columns:1fr}.area-graph,#ggb-container{min-height:390px;height:390px}}
+@media(max-width:600px){.area-shell{padding:16px 12px 50px}.area-panel{padding:16px}.area-graph,#ggb-container{min-height:310px;height:310px}.area-answer-grid{gap:8px}.area-answer-grid button{min-height:67px;font-size:23px}}
+@media print{header,.area-actions,.area-answer-grid,.area-next,.area-report,.area-guide,footer{display:none!important}.area-panel{break-inside:avoid;box-shadow:none}.area-shell{padding:0}}
+</style></head>
+<body><a href="#atividade" class="skip">Ir para a atividade</a>
+<header><div class="wrap head"><a href="../index.html" class="brand"><span class="jp-logo-pair" aria-label="Marcas institucionais"><img src="../assets/logo-jp-original.svg" alt="Escola João Paulo I"><img src="../assets/logo-eti-original.svg" alt="Escola de Tempo Integral MT"></span><span><small>ESCOLA ESTADUAL JOÃO PAULO I</small><strong>JP Recomposição</strong></span></a><a href="../componentes/matematica.html" style="color:#92eff4">← Matemática</a></div></header>
+<main id="atividade" class="area-shell">
+<section class="area-intro"><span class="eyebrow">MATEMÁTICA · GEOMETRIA · RECOMPOSIÇÃO</span><h1>Áreas de figuras planas<br>na malha quadriculada</h1>
+<p>Observe as figuras no GeoGebra, conte os quadradinhos e descubra a área de retângulos, triângulos e figuras compostas. Você aprenderá a relacionar a malha com as fórmulas, uma questão de cada vez.</p>
+<p><strong>Cada quadradinho mede 1 cm × 1 cm e tem área de 1 cm².</strong></p></section>
+<div class="area-stats"><div class="area-stat"><small>Questão</small><strong id="area-position">1 / 12</strong></div><div class="area-stat"><small>Acertos</small><strong id="area-hits">0</strong></div><div class="area-stat"><small>Progresso</small><strong id="area-percent">0%</strong></div></div>
+<div class="area-stage-list" id="area-stages"><span class="active">1 · Retângulos e quadrados</span><span>2 · Triângulos</span><span>3 · Figuras compostas</span></div>
+<div class="area-meter" aria-label="Progresso"><div id="area-meter-fill"></div></div>
+<div class="area-layout">
+<section class="area-panel" aria-label="Malha quadriculada">
+<h2>Investigue na malha</h2><p class="area-figure-note" id="area-figure-note">Cada quadradinho vale 1 cm².</p>
+<div class="area-graph"><div id="ggb-container" aria-label="GeoGebra com a figura na malha quadriculada"></div><svg id="grid-fallback" viewBox="0 0 600 440" role="img" aria-label="Malha quadriculada com figura geométrica"></svg></div>
+<p id="geogebra-status" class="area-geostatus" role="status">Carregando o GeoGebra. Uma malha alternativa permanece disponível caso o serviço não carregue.</p>
+<div class="area-actions"><button id="area-show-tip" type="button">Mostrar uma dica</button><button id="area-explore" type="button" disabled>Explorar movendo vértices (após responder)</button><button id="area-reset-figure" type="button">Restaurar a figura</button></div>
+<p id="area-explore-message" class="area-geostatus">Primeiro responda à questão. Depois, você poderá movimentar os vértices no GeoGebra para investigar outras figuras.</p>
+</section>
+<section class="area-panel" id="area-question-panel">
+<span class="eyebrow" id="area-level">NÍVEL 1 · RETÂNGULOS</span><h2 id="area-question">Qual é a área da figura colorida?</h2>
+<p id="area-prompt">Observe a malha e escolha o resultado correto.</p><div class="area-answer-grid" id="area-choices" role="group" aria-label="Alternativas de múltipla escolha"></div>
+<div id="area-feedback" class="area-feedback" role="status" aria-live="polite">Conte os quadradinhos ou use a regra da figura antes de marcar.</div>
+<button id="area-next" type="button" class="area-next" disabled>Responda para avançar</button>
+</section></div>
+<section id="area-complete" class="area-done" hidden><h2>Trilha concluída!</h2><p id="area-summary"></p><p>Revise as explicações das questões e converse com seu professor sobre as estratégias utilizadas. Este resultado é formativo e não substitui a avaliação escolar.</p><div class="area-report"><button type="button" id="area-download">Baixar resultados (CSV)</button><button type="button" id="area-restart">Refazer a trilha</button></div><p id="area-report-status" aria-live="polite"></p></section>
+<section class="area-panel area-guide" aria-labelledby="area-teacher-title"><h2 id="area-teacher-title">Orientações de estudo e acompanhamento</h2>
+<details open><summary>Para o estudante: como resolver</summary><ol><li>Observe a figura sobre a malha quadriculada.</li><li>Conte os quadradinhos inteiros. Em triângulos, procure metades de quadradinhos.</li><li>Calcule a área no caderno. Você pode comparar com a fórmula correspondente.</li><li>Clique em uma das quatro alternativas e leia o feedback.</li><li>Após responder, experimente movimentar os vértices no GeoGebra. Restaure a figura para manter o desenho original.</li></ol></details>
+<details><summary>Para o professor: proposta de recomposição</summary><p><strong>Objetivo:</strong> reconhecer a unidade de área, decompor figuras e compreender as relações A = base × altura, A = (base × altura)/2 e a soma de áreas em figuras compostas. Organize uma exploração orientada com malha quadriculada impressa: peça que o estudante desenhe a figura, registre as medidas, calcule a área e justifique oralmente. As 12 questões estão distribuídas em 3 níveis com 4 itens cada. O registro CSV é local e não exige identificação pessoal.</p></details>
+<details><summary>Fórmulas de apoio</summary><p><strong>Retângulo:</strong> A = base × altura. <strong>Triângulo:</strong> A = (base × altura) ÷ 2. <strong>Trapézio:</strong> A = (base maior + base menor) × altura ÷ 2. <strong>Figura em L:</strong> divida em retângulos ou subtraia o recorte.</p></details>
+</section>
+</main>
+<footer><div class="wrap foot"><strong>JP Recomposição · Aprender, superar e avançar.</strong><small>EE João Paulo I · Paranaíta–MT</small></div></footer>
+<script src="https://www.geogebra.org/apps/deployggb.js" defer></script>
+<script>
+'use strict';
+const $ = id => document.getElementById(id);
+const activities=[
+ {kind:'rectangle',pts:[[2,2],[6,2],[6,5],[2,5]],text:'Conte 4 colunas e 3 linhas de quadradinhos.',explain:'O retângulo tem base 4 cm e altura 3 cm. A = 4 × 3 = 12 cm².'},
+ {kind:'rectangle',pts:[[3,2],[7,2],[7,6],[3,6]],text:'Este quadrado tem lados iguais. Quantos quadradinhos ele ocupa?',explain:'O quadrado tem lado 4 cm. A = 4 × 4 = 16 cm².'},
+ {kind:'rectangle',pts:[[1,1],[8,1],[8,4],[1,4]],text:'Encontre a base e a altura usando a malha.',explain:'Base 7 cm e altura 3 cm. A = 7 × 3 = 21 cm².'},
+ {kind:'rectangle',pts:[[2,3],[11,3],[11,5],[2,5]],text:'Uma figura comprida pode ter uma área pequena? Conte as linhas e colunas.',explain:'Base 9 cm e altura 2 cm. A = 9 × 2 = 18 cm².'},
+ {kind:'triangle',pts:[[2,2],[8,2],[2,6]],text:'Observe: este triângulo ocupa metade de um retângulo de 6 por 4.',explain:'Base 6 cm e altura 4 cm. A = (6 × 4) ÷ 2 = 12 cm².'},
+ {kind:'triangle',pts:[[3,2],[9,2],[6,6]],text:'A altura vai do vértice superior até a base, perpendicularmente.',explain:'Base 6 cm e altura 4 cm. A = (6 × 4) ÷ 2 = 12 cm².'},
+ {kind:'triangle',pts:[[1,2],[7,2],[5,7]],text:'Conte a base e a altura. A ponta não precisa estar sobre uma extremidade.',explain:'Base 6 cm e altura 5 cm. A = (6 × 5) ÷ 2 = 15 cm².'},
+ {kind:'triangle',pts:[[2,1],[10,1],[6,6]],text:'Compare o triângulo com um retângulo de mesma base e altura.',explain:'Base 8 cm e altura 5 cm. A = (8 × 5) ÷ 2 = 20 cm².'},
+ {kind:'composite',pts:[[2,2],[8,2],[8,4],[5,4],[5,7],[2,7]],text:'Figura em L: divida-a em dois retângulos sem sobrepor áreas.',explain:'Parte inferior: 6 × 2 = 12 cm². Parte superior esquerda: 3 × 3 = 9 cm². Total = 21 cm².'},
+ {kind:'composite',pts:[[1,1],[9,1],[9,3],[4,3],[4,6],[1,6]],text:'Imagine dois retângulos unidos. Some as duas áreas.',explain:'Parte inferior: 8 × 2 = 16 cm². Parte superior esquerda: 3 × 3 = 9 cm². Total = 25 cm².'},
+ {kind:'trapezoid',pts:[[2,2],[10,2],[8,6],[4,6]],text:'Trapézio: meça as duas bases paralelas e a altura.',explain:'Base maior 8 cm, base menor 4 cm, altura 4 cm. A = (8 + 4) × 4 ÷ 2 = 24 cm².'},
+ {kind:'trapezoid',pts:[[1,2],[10,2],[8,6],[4,6]],text:'Use a fórmula do trapézio e confirme pela malha.',explain:'Base maior 9 cm, base menor 4 cm, altura 4 cm. A = (9 + 4) × 4 ÷ 2 = 26 cm².'}
+];
+function polygonArea(points){let twice=0;for(let i=0;i<points.length;i++){const p=points[i],q=points[(i+1)%points.length];twice+=p[0]*q[1]-q[0]*p[1]}return Math.abs(twice)/2}
+const levels=['RETÂNGULOS E QUADRADOS','TRIÂNGULOS','FIGURAS COMPOSTAS E TRAPÉZIOS'];
+let cursor=0,hits=0,answered=false,geo=null,geoLoaded=false,records=[],exploring=false;
+function alternatives(correct,index){const choices=new Set([correct]);const candidates=[correct+2,correct-2,correct+4,correct-4,correct+6,correct-6,correct*2,Math.floor(correct/2),correct+8,correct-8,correct+10];for(let j=0;j<candidates.length&&choices.size<4;j++){let n=candidates[(j+index*3)%candidates.length];if(n>0&&n!==correct)choices.add(n)}while(choices.size<4)choices.add(correct+choices.size+1);return [...choices].sort((a,b)=>((a*31+index*13)%17)-((b*31+index*13)%17))}
+function fallbackFigure(item){
+ const svg=$('grid-fallback'),ns='http://www.w3.org/2000/svg';svg.replaceChildren();
+ function el(tag,attrs){const n=document.createElementNS(ns,tag);Object.entries(attrs).forEach(([key,value])=>n.setAttribute(key,String(value)));svg.append(n);return n}
+ const unit=36,ox=55,oy=398;
+ for(let x=0;x<=13;x++)el('line',{x1:ox+x*unit,y1:oy-10*unit,x2:ox+x*unit,y2:oy,stroke:'#cee6ed','stroke-width':x===0?2:1});
+ for(let y=0;y<=10;y++)el('line',{x1:ox,y1:oy-y*unit,x2:ox+13*unit,y2:oy-y*unit,stroke:'#cee6ed','stroke-width':y===0?2:1});
+ for(let x=0;x<=12;x+=2){const text=el('text',{x:ox+x*unit,y:oy+17,'text-anchor':'middle',fill:'#456c7d','font-size':12});text.textContent=x}
+ for(let y=0;y<=10;y+=2){const text=el('text',{x:ox-13,y:oy-y*unit+4,'text-anchor':'middle',fill:'#456c7d','font-size':12});text.textContent=y}
+ const polyPoints=item.pts.map(p=>(ox+p[0]*unit)+','+(oy-p[1]*unit)).join(' ');
+ el('polygon',{points:polyPoints,fill:'#00a5bd','fill-opacity':'.42',stroke:'#063966','stroke-width':4,'stroke-linejoin':'round'});
+ for(const p of item.pts)el('circle',{cx:ox+p[0]*unit,cy:oy-p[1]*unit,r:5,fill:'#063966',stroke:'white','stroke-width':2});
+}
+function geoFigure(item,unlock){
+ if(!geo)return;
+ try{
+  geo.newConstruction();geo.setAxesVisible(true,true);geo.setGridVisible(true);geo.setCoordSystem(0,13,0,10);
+  if(geo.setGraphicsOptions)geo.setGraphicsOptions(1,{grid:true,gridType:0,gridDistance:[1,1],pointCapturing:2});
+  const labels=['A','B','C','D','E','F'];
+  item.pts.forEach((p,i)=>geo.evalCommand(labels[i]+'=('+p[0]+','+p[1]+')'));
+  geo.evalCommand('fig=Polygon('+labels.slice(0,item.pts.length).join(',')+')');
+  geo.setColor('fig',0,138,167);geo.setFilling('fig',.35);geo.setLineThickness('fig',5);geo.setLabelVisible('fig',false);
+  item.pts.forEach((p,i)=>{geo.setColor(labels[i],6,57,102);geo.setPointSize(labels[i],5);geo.setLabelVisible(labels[i],false);geo.setFixed(labels[i],!unlock,true)});
+  exploring=unlock;
+ }catch(error){$('geogebra-status').textContent='A visualização alternativa permanece disponível. Não foi possível atualizar o GeoGebra.';$('grid-fallback').style.display='block'}
+}
+function drawFigure(){const item=activities[cursor];fallbackFigure(item);if(geoLoaded){geoFigure(item,false);$('grid-fallback').style.display='none'}else $('grid-fallback').style.display='block'}
+function render(){
+ if(cursor>=activities.length){finish();return}
+ answered=false;exploring=false;
+ const item=activities[cursor],correct=polygonArea(item.pts),stage=Math.floor(cursor/4);
+ $('area-position').textContent=(cursor+1)+' / 12';$('area-hits').textContent=hits;$('area-percent').textContent=Math.round(cursor/12*100)+'%';
+ $('area-meter-fill').style.width=(cursor/12*100)+'%';
+ $('area-level').textContent='NÍVEL '+(stage+1)+' · '+levels[stage];
+ $('area-question').textContent='Qual é a área da figura colorida?';
+ $('area-prompt').textContent=item.text;
+ $('area-figure-note').textContent='1 quadradinho = 1 cm². Observe e conte as unidades.';
+ $('area-feedback').className='area-feedback';$('area-feedback').textContent='Observe a malha, faça o cálculo e escolha uma alternativa.';
+ $('area-next').disabled=true;$('area-next').textContent='Responda para avançar';
+ $('area-explore').disabled=true;$('area-explore-message').textContent='Após responder, você poderá mover os vértices no GeoGebra.';
+ const boxes=$('area-stages').children;for(let i=0;i<boxes.length;i++)boxes[i].className=i<stage?'complete':i===stage?'active':'';
+ const choices=$('area-choices');choices.replaceChildren();
+ alternatives(correct,cursor).forEach(value=>{
+  const b=document.createElement('button');b.type='button';b.textContent=value+' cm²';b.dataset.value=String(value);
+  b.addEventListener('click',()=>choose(value));choices.append(b)
+ });
+ drawFigure();
+}
+function choose(selected){
+ if(answered)return;answered=true;
+ const item=activities[cursor],correct=polygonArea(item.pts),ok=selected===correct;
+ if(ok)hits++;
+ records.push({n:cursor+1,nivel:levels[Math.floor(cursor/4)],figura:item.kind,marcada:selected,correta:correct,acerto:ok});
+ [...$('area-choices').children].forEach(button=>{button.disabled=true;const v=Number(button.dataset.value);if(v===correct)button.classList.add('correct');else if(v===selected)button.classList.add('wrong')});
+ $('area-feedback').className='area-feedback '+(ok?'positive-feedback':'review-feedback');
+ $('area-feedback').textContent=(ok?'Correto! ':'Vamos revisar: a resposta é '+correct+' cm². ')+item.explain;
+ $('area-hits').textContent=hits;
+ $('area-next').disabled=false;$('area-next').textContent=cursor===11?'Ver meu resultado':'Próxima figura →';
+ $('area-explore').disabled=!geoLoaded;
+ $('area-explore-message').textContent=geoLoaded?'Agora você pode mover os vértices para explorar. As mudanças não alteram a resposta já registrada.':'A exploração por movimento depende do carregamento do GeoGebra.';
+}
+function finish(){
+ $('area-question-panel').hidden=true;$('area-complete').hidden=false;
+ $('area-position').textContent='12 / 12';$('area-percent').textContent='100%';$('area-meter-fill').style.width='100%';
+ [...$('area-stages').children].forEach(s=>s.className='complete');
+ const p=Math.round(hits/12*100);$('area-summary').textContent='Você concluiu as 12 questões e acertou '+hits+' ('+p+'%). O importante é analisar as explicações e seguir praticando.';
+ $('area-explore').disabled=!geoLoaded;
+}
+function download(){
+ const escapeCsv=v=>{const str=String(v??'').replace(/[\r\n]+/g,' '),safe=/^[=+@\t]/.test(str)||/^-{1}(?!\d)/.test(str)?"'"+str:str;return '"'+safe.replace(/"/g,'""')+'"'};
+ const data=[['Questão','Nível','Figura','Resposta marcada (cm²)','Resposta correta (cm²)','Resultado']];
+ for(const r of records)data.push([r.n,r.nivel,r.figura,r.marcada,r.correta,r.acerto?'Acerto':'Revisar']);
+ data.push(['TOTAL','','',hits,records.length,Math.round(hits/Math.max(1,records.length)*100)+'%']);
+ const csv='\uFEFF'+data.map(row=>row.map(escapeCsv).join(';')).join('\r\n');
+ const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'})),a=document.createElement('a');
+ a.href=url;a.download='jp-recomposicao-areas-malha-'+new Date().toISOString().slice(0,10)+'.csv';
+ document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1200);
+ $('area-report-status').textContent='Relatório baixado neste dispositivo. Não há envio automático à escola.';
+}
+$('area-next').addEventListener('click',()=>{if(!answered)return;cursor++;render()});
+$('area-show-tip').addEventListener('click',()=>{
+ const i=activities[cursor],hint=i.kind==='rectangle'?'Conte quantos quadradinhos cabem na base e na altura. Multiplique.':i.kind==='triangle'?'Ache a base e a altura: o triângulo ocupa metade de um paralelogramo ou retângulo de mesma base e altura.':i.kind==='trapezoid'?'Some as duas bases, multiplique pela altura e divida por 2.':'Divida a figura em dois retângulos e some as áreas.';
+ $('area-figure-note').textContent='DICA: '+hint;
+});
+$('area-reset-figure').addEventListener('click',()=>{drawFigure();$('area-explore-message').textContent='Figura original restaurada. Cada quadradinho mede 1 cm².'});
+$('area-explore').addEventListener('click',()=>{if(!answered||!geoLoaded)return;geoFigure(activities[cursor],true);$('area-explore-message').textContent='Arraste os pontos no GeoGebra e observe como a área varia. Clique em Restaurar a figura antes de comparar a resposta original.'});
+$('area-download').addEventListener('click',download);
+$('area-restart').addEventListener('click',()=>{cursor=0;hits=0;records=[];answered=false;$('area-question-panel').hidden=false;$('area-complete').hidden=true;render();window.scrollTo({top:0,behavior:'smooth'})});
+function initGeo(){
+ if(typeof GGBApplet!=='function'){$('geogebra-status').textContent='GeoGebra indisponível no momento. Use a malha alternativa exibida para continuar a atividade.';return}
+ try{
+  const g=new GGBApplet({appName:'classic',width:650,height:440,showToolBar:false,showMenuBar:false,showAlgebraInput:false,showResetIcon:false,enableShiftDragZoom:false,enableRightClick:false,showFullscreenButton:true,appletOnLoad(api){
+   geo=api;geoLoaded=true;
+   $('geogebra-status').textContent='GeoGebra carregado. Observe a malha e, após responder, explore movendo os pontos.';
+   drawFigure();if(answered)$('area-explore').disabled=false;
+  }},true);g.inject('ggb-container');
+ }catch(error){$('geogebra-status').textContent='Não foi possível carregar o GeoGebra. A malha alternativa está disponível.'}
+}
+render();window.addEventListener('load',initGeo);
+</script></body></html>
