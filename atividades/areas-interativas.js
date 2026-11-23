@@ -67,7 +67,7 @@ function answers(expected,n){
 function info(message,type=''){const e=$('feedback');e.textContent=message;e.className='game-feedback'+(type?' '+type:'')}
 function updateHUD(){
  $('hud-phase').textContent=index<12?'1 / 2':'2 / 2';
- $('hud-progress').textContent=completed+' / 20';$('hud-xp').textContent=score+' XP';
+ $('hud-progress').textContent=completed+' / 20';$('hud-xp').textContent=Math.round(score/4.2)+' JPs';
  $('hud-rank').textContent=completed>=20?'Mestre das áreas':completed>=16?'Construtor':completed>=12?'Arquiteto':completed>=6?'Investigador':'Explorador';
  $('hud-meter').style.width=(completed/20*100)+'%';
  $('tab-1').className=index<12?'active':'done';$('tab-2').className=index<12?'':index<20?'active':'done';
@@ -115,7 +115,7 @@ function choose(value){
  completed++;
  records.push({phase:'Investigação',challenge:index+1,kind:q.kind,goal:correct,answer:value,correct:ok,attempts:1,xp:ok?15:0});
  [...$('answer-buttons').children].forEach(b=>{b.disabled=true;const v=Number(b.dataset.value);if(v===correct)b.classList.add('correct');else if(v===value)b.classList.add('wrong')});
- info((ok?'🎉 Acertou! +15 XP. ':'🔎 Boa tentativa. A resposta correta é '+correct+' cm². ')+q.explain,ok?'right':'review');
+ info((ok?'🎉 Acertou! +15 JPs. ':'🔎 Boa tentativa. A resposta correta é '+correct+' cm². ')+q.explain,ok?'right':'review');
  $('next').disabled=false;$('next').textContent=index===11?'Desbloquear oficina de construção 🚀':'Próximo desafio →';updateHUD();
 }
 function updateMeasures(){
@@ -153,7 +153,7 @@ function checkBuild(){
  locked=true;completed++;const earned=attempts===1?30:20;score+=earned;
  records.push({phase:'Construção',challenge:index-11,kind:t.kind,goal:t.target,answer:area,correct:true,attempts,xp:earned});
  $('check-build').disabled=true;
- info('🏆 Conseguiu! Área = '+(t.kind==='triangle'?'('+width+' × '+height+') ÷ 2':width+' × '+height)+' = '+area+' cm². +'+earned+' XP.','right');
+ info('🏆 Conseguiu! Área = '+(t.kind==='triangle'?'('+width+' × '+height+') ÷ 2':width+' × '+height)+' = '+area+' cm². +'+earned+' JPs.','right');
  $('next').disabled=false;$('next').textContent=index===19?'Concluir missão 🏆':'Próxima construção →';updateHUD();
 }
 function showHint(){
@@ -170,7 +170,7 @@ function showHint(){
 function finish(){
  $('game-main').hidden=true;$('game-finish').hidden=false;
  $('hud-phase').textContent='2 / 2';$('tab-2').className='done';updateHUD();
- $('finish-summary').textContent='Você terminou 12 desafios de investigação e 8 construções. Acertos na primeira fase: '+right+' de 12. Pontuação final: '+score+' XP. Baixe seu relatório e mostre ao professor como calculou as áreas.';
+ $('finish-summary').textContent='Você terminou 12 desafios de investigação e 8 construções. Acertos na primeira fase: '+right+' de 12. Pontuação final: '+score+' JPs. Baixe seu relatório e mostre ao professor como calculou as áreas.';
  $('game-finish').scrollIntoView({behavior:'smooth',block:'start'});
 }
 function download(){
@@ -206,3 +206,6 @@ $('print-grid').addEventListener('click',()=>window.print());
 $('download-report').addEventListener('click',download);
 $('restart').addEventListener('click',()=>{index=right=completed=score=attempts=hintCount=0;points=[];records=[];$('game-main').hidden=false;$('game-finish').hidden=true;render();window.scrollTo({top:0,behavior:'smooth'})});
 render();
+
+function exportJPsAreas(){return JPPontos.exportar({atividade:'areas-malha',concluida:completed>=20,jps:Math.round(score/4.2)})}
+document.getElementById('area-jps').addEventListener('click',exportJPsAreas);
