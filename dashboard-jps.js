@@ -60,19 +60,22 @@ function parseCSV(text){
 const HEADER=['formato','codigo','atividade','nome_atividade','jps','concluida','data_utc','tentativa_id'];
 function decode(text){
  const lines=parseCSV(text);
- if(lines.length!==2||lines[0].length!==8||!HEADER.every((h,i)=>lines[0][i].trim()===h))
-  throw new Error('Formato desconhecido: use o arquivo Comprovante JPs de uma atividade concluída.');
- const data=Object.fromEntries(HEADER.map((name,i)=>[name,lines[1][i]]));
- if(!/^\d{1,3}$/.test(data.jps))throw new Error('Pontuação JPs inválida');
- data.jps=Number(data.jps);
- data.codigo=data.codigo.trim().toUpperCase();
- data.atividade=data.atividade.trim();
- data.concluida=data.concluida.trim();
- data.tentativa_id=data.tentativa_id.trim().toUpperCase();
- if(!isRecord(data))throw new Error('Comprovante incompleto ou com campos não reconhecidos');
- // Never trust the human-readable label in a file.
- data.nome_atividade=CATALOG[data.atividade];
- return data;
+ if(lines.length<2||lines[0].length!==8||!HEADER.every((h,i)=>lines[0][i].trim()===h))
+  throw new Error('Formato desconhecido: use o arquivo Comprovante JPs ou backup do painel.');
+ if(lines.length>5001)throw new Error('Backup possui mais registros que o limite de importação');
+ return lines.slice(1).map(line=>{
+  if(line.length!==8)throw new Error('Linha do CSV com número incorreto de colunas');
+  const data=Object.fromEntries(HEADER.map((name,i)=>[name,line[i]]));
+  if(!/^\d{1,3}$/.test(data.jps))throw new Error('Pontuação JPs inválida');
+  data.jps=Number(data.jps);
+  data.codigo=data.codigo.trim().toUpperCase();
+  data.atividade=data.atividade.trim();
+  data.concluida=data.concluida.trim();
+  data.tentativa_id=data.tentativa_id.trim().toUpperCase();
+  if(!isRecord(data))throw new Error('Comprovante incompleto ou com campos não reconhecidos');
+  data.nome_atividade=CATALOG[data.atividade];
+  return data;
+ });
 }
 async function importFiles(){
  const files=[...$('jp-import').files];
@@ -81,11 +84,13 @@ async function importFiles(){
  const known=new Set(archive.map(r=>r.tentativa_id+'|'+r.atividade+'|'+r.codigo));
  for(const file of files){
   try{
-   if(!/\.csv$/i.test(file.name)||file.size>150000||file.size<35)throw Error('Arquivo não é CSV válido ou é muito grande');
-   const data=decode(await file.text());
-   const signature=data.tentativa_id+'|'+data.atividade+'|'+data.codigo;
-   if(known.has(signature)){repeated++;continue}
-   known.add(signature);archive.push(data);imported++;
+   if(!/\.csv$/i.test(file.name)||file.size>1200000||file.size<35)throw Error('Arquivo não é CSV válido ou é muito grande');
+   const incoming=decode(await file.text());
+   for(const data of incoming){
+    const signature=data.tentativa_id+'|'+data.atividade+'|'+data.codigo;
+    if(known.has(signature)){repeated++;continue}
+    known.add(signature);archive.push(data);imported++;
+   }
   }catch(error){invalid++;if(errors.length<3)errors.push(file.name+': '+error.message)}
  }
  saveLocal();render();
@@ -161,7 +166,7 @@ function exportBackup(){
  if(!archive.length){setStatus('Não há comprovantes para exportar.','review');return}
  const rows=[HEADER,...archive.map(r=>HEADER.map(k=>r[k]))];
  download('jp-recomposicao-backup-comprovantes-'+new Date().toISOString().slice(0,10)+'.csv',rows);
- setStatus('Backup de controle exportado. Guarde-o em pasta institucional protegida. Este backup não é importável como comprovante individual.');
+ setStatus('Backup de controle exportado. Guarde-o em pasta institucional protegida; você pode reimportá-lo neste painel.');
 }
 $('jp-import-action').addEventListener('click',importFiles);
 $('jp-export').addEventListener('click',exportStandings);
