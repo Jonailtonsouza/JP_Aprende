@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#063966"><meta name="description" content="Trilha interativa de recomposição de áreas de figuras planas com malha quadriculada no GeoGebra, 12 desafios e devolutiva.">
+<meta name="theme-color" content="#063966"><meta name="description" content="Trilha interativa de recomposição de áreas de figuras planas com malha quadriculada no GeoGebra, 12 desafios de observação, 8 construções gamificadas, malha 1 cm, feedback e devolutiva.">
 <title>Áreas de Figuras Planas | JP Recomposição</title><link rel="stylesheet" href="../style.css">
 <style>
 :root{--area-blue:#063966;--area-teal:#008aa7;--area-cyan:#05c9dc}
@@ -278,4 +278,4 @@ function initGeo(){
  }catch(error){$('geogebra-status').textContent='Não foi possível carregar o GeoGebra. A malha alternativa está disponível.'}
 }
 render();window.addEventListener('load',initGeo);
-</script></body></html>
+</script><script src="areas-construtor.js?v=2"></script></body></html>
