@@ -523,3 +523,81 @@ body.home-page{
 @media(max-width:480px){
   .learning-home .learn-official-small{width:120px;max-width:120px;height:43px}
 }
+
+
+/* JP RECOMPOSIÇÃO — logos oficiais separadas e marcas-d’água */
+.learning-home:not(.curriculum-page):not(.pv-page) .learn-logo-strip{
+  display:grid;
+  grid-template-columns:minmax(160px,1fr) minmax(240px,1.25fr) minmax(160px,1fr);
+  align-items:center;
+  gap:clamp(15px,3vw,55px);
+  min-height:178px;
+  padding:20px max(24px,calc((100vw - 1190px)/2))!important;
+  margin:0;
+  background:#fff;
+  border-bottom:1px solid #d4ebef;
+}
+.learning-home:not(.curriculum-page):not(.pv-page) .learn-logo-strip .brand-logo{
+  display:block;
+  width:100%;
+  height:128px;
+  max-height:none;
+  max-width:335px;
+  object-fit:contain;
+}
+.learning-home:not(.curriculum-page):not(.pv-page) .learn-logo-strip .brand-logo-jp{justify-self:start}
+.learning-home:not(.curriculum-page):not(.pv-page) .learn-logo-strip .brand-logo-eti{justify-self:end}
+.learning-home:not(.curriculum-page):not(.pv-page) .learn-logo-strip .learn-logo-heading{
+  border:0;
+  padding:0;
+  text-align:center;
+  min-width:0;
+}
+.learning-home:not(.curriculum-page):not(.pv-page) .learn-logo-strip .learn-logo-heading span{
+  font-size:10px;letter-spacing:1.1px;color:#008ca7;
+}
+.learning-home:not(.curriculum-page):not(.pv-page) .learn-logo-strip .learn-logo-heading strong{
+  color:#063966;font-size:clamp(19px,2.5vw,30px);letter-spacing:-.6px;
+}
+.learning-home:not(.curriculum-page):not(.pv-page) .learn-logo-strip .learn-logo-heading small{
+  color:#52758a;font-size:12px;display:block;
+}
+/* A marca-d'água fica por trás do conteúdo, sem receber clique ou foco. */
+.learning-home .learn-hero{position:relative;isolation:isolate;overflow:hidden}
+.learning-home .learn-hero .hero-watermarks{
+  position:absolute;inset:0;z-index:0;pointer-events:none;user-select:none;overflow:hidden;
+}
+.learning-home .learn-hero .hero-watermarks img{
+  position:absolute;width:min(32vw,380px);height:auto;opacity:.075;
+  filter:grayscale(1) brightness(0) invert(1);
+}
+.learning-home .learn-hero .hero-watermarks .watermark-jp{
+  top:8%;left:-7%;transform:rotate(-14deg);
+}
+.learning-home .learn-hero .hero-watermarks .watermark-eti{
+  bottom:-12%;right:-4%;transform:rotate(12deg);
+}
+.learning-home .learn-hero>.learn-hero-grid{position:relative;z-index:1}
+@media(max-width:900px){
+ .learning-home:not(.curriculum-page):not(.pv-page) .learn-logo-strip{
+   grid-template-columns:1fr 1fr;min-height:0;gap:12px 18px;padding:14px 24px!important;
+ }
+ .learning-home:not(.curriculum-page):not(.pv-page) .learn-logo-strip .learn-logo-heading{
+   grid-row:2;grid-column:1 / -1;
+ }
+ .learning-home:not(.curriculum-page):not(.pv-page) .learn-logo-strip .brand-logo{height:102px;max-width:300px}
+ .learning-home:not(.curriculum-page):not(.pv-page) .learn-logo-strip .brand-logo-jp{grid-row:1;grid-column:1}
+ .learning-home:not(.curriculum-page):not(.pv-page) .learn-logo-strip .brand-logo-eti{grid-row:1;grid-column:2}
+}
+@media(max-width:600px){
+ .learning-home:not(.curriculum-page):not(.pv-page) .learn-logo-strip{
+   padding:12px 16px!important;gap:4px 8px;
+ }
+ .learning-home:not(.curriculum-page):not(.pv-page) .learn-logo-strip .brand-logo{height:72px;max-width:100%;min-width:0}
+ .learning-home:not(.curriculum-page):not(.pv-page) .learn-logo-strip .learn-logo-heading strong{font-size:20px}
+ .learning-home:not(.curriculum-page):not(.pv-page) .learn-logo-strip .learn-logo-heading span{font-size:9px}
+ .learning-home:not(.curriculum-page):not(.pv-page) .learn-logo-strip .learn-logo-heading small{font-size:10px}
+ .learning-home .learn-hero .hero-watermarks img{width:55vw;opacity:.055}
+ .learning-home .learn-hero .hero-watermarks .watermark-jp{left:-18%;top:13%}
+ .learning-home .learn-hero .hero-watermarks .watermark-eti{right:-23%;bottom:6%}
+}
