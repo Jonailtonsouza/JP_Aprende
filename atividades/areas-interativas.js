@@ -125,7 +125,7 @@ function updateMeasures(){
  const kind=builds[index-12].kind;
  const width=Math.abs(points[1][0]-points[0][0]);
  const height=kind==='triangle'?Math.abs(points[2][1]-points[0][1]):Math.abs(points[1][1]-points[0][1]);
- $('build-measures').textContent='Base: '+width+' cm · Altura: '+height+' cm. Calcule a área e confira sua construção.';
+ $('build-measures').textContent='Figura desenhada com '+points.length+' vértices. Observe a malha, calcule no caderno e clique em Conferir minha construção.';
 }
 function addPoint(point){
  if(index<12||locked||index>=20)return;
