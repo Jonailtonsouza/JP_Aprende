@@ -115,7 +115,7 @@ function choose(value){
  completed++;
  records.push({phase:'Investigação',challenge:index+1,kind:q.kind,goal:correct,answer:value,correct:ok,attempts:1,xp:ok?15:0});
  [...$('answer-buttons').children].forEach(b=>{b.disabled=true;const v=Number(b.dataset.value);if(v===correct)b.classList.add('correct');else if(v===value)b.classList.add('wrong')});
- info((ok?'🎉 Acertou! +15 JPs. ':'🔎 Boa tentativa. A resposta correta é '+correct+' cm². ')+q.explain,ok?'right':'review');
+ info((ok?'🎉 Acertou! Seus JPs aumentaram. ':'🔎 Boa tentativa. A resposta correta é '+correct+' cm². ')+q.explain,ok?'right':'review');
  $('next').disabled=false;$('next').textContent=index===11?'Desbloquear oficina de construção 🚀':'Próximo desafio →';updateHUD();
 }
 function updateMeasures(){
@@ -153,7 +153,7 @@ function checkBuild(){
  locked=true;completed++;const earned=attempts===1?30:20;score+=earned;
  records.push({phase:'Construção',challenge:index-11,kind:t.kind,goal:t.target,answer:area,correct:true,attempts,xp:earned});
  $('check-build').disabled=true;
- info('🏆 Conseguiu! Área = '+(t.kind==='triangle'?'('+width+' × '+height+') ÷ 2':width+' × '+height)+' = '+area+' cm². +'+earned+' JPs.','right');
+ info('🏆 Conseguiu! Área = '+(t.kind==='triangle'?'('+width+' × '+height+') ÷ 2':width+' × '+height)+' = '+area+' cm². Você ganhou pontos de missão e aumentou seus JPs.','right');
  $('next').disabled=false;$('next').textContent=index===19?'Concluir missão 🏆':'Próxima construção →';updateHUD();
 }
 function showHint(){
@@ -175,7 +175,7 @@ function finish(){
 }
 function download(){
  function csv(v){let s=String(v??'').replace(/[\r\n]+/g,' ');if(/^[=+@\t]/.test(s)||/^-(?!\d)/.test(s))s="'"+s;return '"'+s.replace(/"/g,'""')+'"'}
- const data=[['Fase','Questão','Figura','Área-alvo (cm²)','Área marcada/construída (cm²)','Acerto','Tentativas','XP']];
+ const data=[['Fase','Questão','Figura','Área-alvo (cm²)','Área marcada/construída (cm²)','Acerto','Tentativas','Pontos de missão (base)']];
  for(const r of records)data.push([r.phase,r.challenge,r.kind,r.goal,r.answer,r.correct?'Sim':'Não',r.attempts,r.xp]);
  data.push(['RESUMO','','','',right+' acertos / 12 investigações','8 construções',completed,score]);
  const contents='\uFEFF'+data.map(row=>row.map(csv).join(';')).join('\r\n');
