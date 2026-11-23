@@ -454,3 +454,72 @@ body.home-page{
 .brand:has(.school-inline-logo) small{color:#d3eff5}
 .brand:has(.school-inline-logo) strong{color:#fff}
 @media(max-width:690px){.school-inline-logo{width:119px;height:42px}.brand:has(.school-inline-logo) strong{font-size:17px}.brand:has(.school-inline-logo) small{font-size:9px}}
+
+
+/* JP Aprende — marcas institucionais ampliadas no topo */
+.learning-home:not(.curriculum-page):not(.pv-page) .learn-logo-strip{
+  position:relative;
+  margin-top:0;
+  max-width:none;
+  width:100%;
+  min-height:164px;
+  padding:18px max(24px,calc((100vw - 1150px)/2))!important;
+  display:grid;
+  grid-template-columns:minmax(220px,300px) minmax(0,1fr);
+  gap:30px;
+  align-items:center;
+  border:0;
+  border-bottom:1px solid #d2e9ef;
+  border-radius:0;
+  background:#fff;
+  box-shadow:none;
+}
+.learning-home:not(.curriculum-page):not(.pv-page) .learn-logo-strip>div{
+  padding-right:24px;
+  border-right:1px solid #d5e9ef;
+}
+.learning-home:not(.curriculum-page):not(.pv-page) .learn-logo-strip strong{font-size:21px}
+.learning-home:not(.curriculum-page):not(.pv-page) .learn-logo-strip img{
+  display:block;
+  width:100%;
+  max-width:760px;
+  max-height:145px;
+  height:auto;
+  object-fit:contain;
+  object-position:center;
+  justify-self:center;
+}
+.learning-home:not(.curriculum-page):not(.pv-page) .learn-header{position:relative;top:auto}
+.learning-home .learn-official-small{
+  width:230px;
+  max-width:230px;
+  height:75px;
+  object-fit:contain;
+}
+@media(max-width:920px){
+  .learning-home:not(.curriculum-page):not(.pv-page) .learn-logo-strip{
+    grid-template-columns:1fr;
+    gap:10px;
+    padding:18px 24px!important;
+    min-height:0;
+  }
+  .learning-home:not(.curriculum-page):not(.pv-page) .learn-logo-strip>div{
+    border-right:0;
+    border-bottom:1px solid #d5e9ef;
+    padding:0 0 10px;
+  }
+  .learning-home:not(.curriculum-page):not(.pv-page) .learn-logo-strip img{max-width:650px;max-height:145px}
+  .learning-home .learn-official-small{width:185px;max-width:185px;height:62px}
+}
+@media(max-width:640px){
+  .learning-home:not(.curriculum-page):not(.pv-page) .learn-logo-strip{
+    padding:12px 18px!important;
+    gap:5px;
+  }
+  .learning-home:not(.curriculum-page):not(.pv-page) .learn-logo-strip>div strong{font-size:17px}
+  .learning-home:not(.curriculum-page):not(.pv-page) .learn-logo-strip img{width:100%;height:auto;max-height:105px}
+  .learning-home .learn-official-small{width:140px;max-width:140px;height:48px}
+}
+@media(max-width:480px){
+  .learning-home .learn-official-small{width:120px;max-width:120px;height:43px}
+}
