@@ -1,4 +1,4 @@
-# JP Aprende — Trilhas de Aprendizagem
+# JP Recomposição — Portal de Recomposição da Aprendizagem
 
 Ambiente público de atividades de recomposição da aprendizagem e Busca Ativa Escolar da Escola Estadual João Paulo I, em Paranaíta, MT.
 
